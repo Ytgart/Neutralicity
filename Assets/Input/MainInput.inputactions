@@ -1,0 +1,90 @@
+{
+    "name": "MainInput",
+    "maps": [
+        {
+            "name": "Main",
+            "id": "e614a09b-6758-402f-bd78-c40fa8a1ceb0",
+            "actions": [
+                {
+                    "name": "Mouse Wheel",
+                    "type": "Value",
+                    "id": "dbf9ef69-82ac-4e1a-9783-8af52ba6c193",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Mouse Click",
+                    "type": "Value",
+                    "id": "bb11a7da-0fa5-44ca-875c-8704562fe242",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Mouse Position",
+                    "type": "Value",
+                    "id": "3e776e34-581b-46ac-85ab-a051a94f54c3",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Mouse Delta",
+                    "type": "Value",
+                    "id": "18ea33e2-50c2-4057-92c1-cf185cde631f",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": ""
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "eafee452-0dca-4b8f-935b-0273978c1b6c",
+                    "path": "<Mouse>/scroll",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Mouse Wheel",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "fe2957ef-a0eb-4d66-9d40-f25210c99d8f",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Mouse Click",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ccc3e253-329d-4b51-8bcd-4ce3baee0157",
+                    "path": "<Mouse>/position",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Mouse Position",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "28e91532-25e7-4269-bfde-650156fae5b4",
+                    "path": "<Mouse>/delta",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Mouse Delta",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}

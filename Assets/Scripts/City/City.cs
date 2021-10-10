@@ -13,7 +13,7 @@ public class City : MonoBehaviour, IDamageable
 
     void Start()
     {
-        
+
     }
 
     void Update()
