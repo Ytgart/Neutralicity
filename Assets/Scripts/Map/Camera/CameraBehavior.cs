@@ -18,7 +18,7 @@ public class CameraBehavior : MonoBehaviour
 
         if (_inputHandler.MainInput.Main.MouseClick.ReadValue<float>() >= 1)
         {
-            _camera.transform.position -= (Vector3)_inputHandler.MainInput.Main.MouseDelta.ReadValue<Vector2>() / 15;
+            _camera.transform.position -= (Vector3)_inputHandler.MainInput.Main.MouseDelta.ReadValue<Vector2>() / 20;
         }
     }
 }
