@@ -5,11 +5,19 @@ using UnityEngine.UI;
 
 public class TilePanel : MonoBehaviour
 {
-    [SerializeField] private Pathfinder _pathFinder;
     [SerializeField] private Text _data;
 
-    public void ShowTileInfo(Vector3 position)
+    public void ShowTileInfo(PathData data, Vector3Int tilePosition)
     {
-        _data.text = _pathFinder.GetTileData(position);
+        if (!(data is null))
+        {
+            _data.text = $@"
+            Координаты: x = {tilePosition.x}, y = {tilePosition.y}
+            Тип: {data.Type.ToString()}
+            F = {data.F}
+            G = {data.G}
+            H = {data.H}
+            Модификатор: {((int)data.Type)}";
+        }
     }
 }

@@ -1,23 +1,23 @@
-using System.Collections;
-using System.Collections.Generic;
-using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Tilemaps;
 
 public class InputHandler : MonoBehaviour
 {
+    [SerializeField] private TileDataRepository _repository;
     [SerializeField] private TilePanel _tilePanel;
-    public MainInput MainInput{get; private set;}
+    [SerializeField] private Tilemap _tilemap;
+    public MainInput MainInput { get; private set; }
 
     private void Awake()
     {
         MainInput = new MainInput();
     }
 
-    private void OnEnable() 
+    private void OnEnable()
     {
-        MainInput.Enable();   
-        MainInput.Main.MouseClick.performed += GetTileData;
+        MainInput.Enable();
+        MainInput.Main.MouseClickRight.performed += GetTileData;
     }
 
     public Vector2 GetWheelVector()
@@ -32,6 +32,8 @@ public class InputHandler : MonoBehaviour
 
     public void GetTileData(InputAction.CallbackContext context)
     {
-        _tilePanel.ShowTileInfo(Camera.main.ScreenToWorldPoint((Vector3)MainInput.Main.MousePosition.ReadValue<Vector2>()));
+        var mousePosition = Camera.main.ScreenToWorldPoint((Vector3)MainInput.Main.MousePosition.ReadValue<Vector2>());
+        var tilePosition = _tilemap.WorldToCell(mousePosition);
+        _tilePanel.ShowTileInfo(_repository.GetTileData(tilePosition), tilePosition);
     }
 }

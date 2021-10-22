@@ -14,9 +14,17 @@
                     "interactions": ""
                 },
                 {
-                    "name": "Mouse Click",
+                    "name": "MouseClickLeft",
                     "type": "Value",
                     "id": "bb11a7da-0fa5-44ca-875c-8704562fe242",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "MouseClickRight",
+                    "type": "Button",
+                    "id": "9465db8e-b9a3-49f7-87d3-1b06734d91b9",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
@@ -57,7 +65,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Mouse Click",
+                    "action": "MouseClickLeft",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -80,6 +88,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Mouse Delta",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "87a2e7cc-a3bb-4f44-9baf-a2f67fc83246",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MouseClickRight",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
