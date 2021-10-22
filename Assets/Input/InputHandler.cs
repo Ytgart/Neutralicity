@@ -1,9 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class InputHandler : MonoBehaviour
 {
+    [SerializeField] private TilePanel _tilePanel;
     public MainInput MainInput{get; private set;}
 
     private void Awake()
@@ -14,6 +17,7 @@ public class InputHandler : MonoBehaviour
     private void OnEnable() 
     {
         MainInput.Enable();   
+        MainInput.Main.MouseClick.performed += GetTileData;
     }
 
     public Vector2 GetWheelVector()
@@ -24,5 +28,10 @@ public class InputHandler : MonoBehaviour
     public Vector2 GetMousePosition()
     {
         return MainInput.Main.MousePosition.ReadValue<Vector2>();
+    }
+
+    public void GetTileData(InputAction.CallbackContext context)
+    {
+        _tilePanel.ShowTileInfo(Camera.main.ScreenToWorldPoint((Vector3)MainInput.Main.MousePosition.ReadValue<Vector2>()));
     }
 }
