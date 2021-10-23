@@ -36,6 +36,9 @@ public class TileDataRepository : MonoBehaviour
                     case "Road":
                         tileData.Add(item, new PathData(PathData.TileType.road));
                         break;
+                    case "Pathless":
+                        tileData.Add(item, new PathData(PathData.TileType.pathless));
+                        break;
                 }
 
             }

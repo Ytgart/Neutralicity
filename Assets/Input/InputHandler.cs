@@ -34,6 +34,6 @@ public class InputHandler : MonoBehaviour
     {
         var mousePosition = Camera.main.ScreenToWorldPoint((Vector3)MainInput.Main.MousePosition.ReadValue<Vector2>());
         var tilePosition = _tilemap.WorldToCell(mousePosition);
-        _tilePanel.ShowTileInfo(_repository.GetTileData(tilePosition), tilePosition);
+        _tilePanel.ShowTileInfo(_repository.GetTileData(tilePosition));
     }
 }
