@@ -28,7 +28,7 @@ public class PathData
     public enum TileType
     {
         road = 0,
-        grass = 5,
+        grass = 100,
         dirt = 7,
         swamp = 10,
         rock = 15,

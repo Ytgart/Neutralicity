@@ -8,13 +8,10 @@ using System;
 public class Pathfinder : MonoBehaviour
 {
     [SerializeField] private Tilemap _tilemap;
+    [SerializeField] private Tilemap _renderTilemap;
+    [SerializeField] private Tile _tile;
     [SerializeField] private BaseUnit _baseUnit;
     [SerializeField] private TileDataRepository _repository;
-
-    void Start()
-    {
-        FindPath(new Vector3Int(0, 0, 0));
-    }
 
     public List<Vector3Int> FindPath(Vector3Int targetTile)
     {
@@ -27,11 +24,14 @@ public class Pathfinder : MonoBehaviour
         var firstTile = CreateNode(0, tilePosition, targetTile, null);
         checkedTiles.Add(_repository.GetTileData(tilePosition));
 
+        _renderTilemap.ClearAllTiles();
+        _repository.UpdateMap();
+
         waitingTiles.AddRange(FindNeighbourTiles(firstTile, checkedTiles));
 
         while (waitingTiles.Count > 0)
         {
-            PathData pathDataToCheck = waitingTiles.Where(x => x.F == waitingTiles.Min(y => y.F)).FirstOrDefault();
+            PathData pathDataToCheck = waitingTiles.Where(x => x.F == waitingTiles.Min(y => y.F)).Last();
 
             if (pathDataToCheck.Position == targetTile)
             {
@@ -56,7 +56,7 @@ public class Pathfinder : MonoBehaviour
         while (currentTile.PreviousTile != null)
         {
             resultPath.Add(currentTile.Position);
-            _tilemap.SetColor(currentTile.Position, Color.green);
+            _renderTilemap.SetTile(currentTile.Position, _tile);
             currentTile = currentTile.PreviousTile;
         }
         return resultPath;
@@ -93,6 +93,22 @@ public class Pathfinder : MonoBehaviour
         if (!checkedTiles.Where(x => x.Position == new Vector3Int(tile.Position.x, tile.Position.y - 1, 0)).Any())
         {
             neighbours.Add(CreateNode(tile.G + 1, new Vector3Int(tile.Position.x, tile.Position.y - 1, 0), tile.TargetPosition, tile));
+        }
+        if (!checkedTiles.Where(x => x.Position == new Vector3Int(tile.Position.x + 1, tile.Position.y + 1, 0)).Any())
+        {
+            neighbours.Add(CreateNode(tile.G + 2, new Vector3Int(tile.Position.x + 1, tile.Position.y + 1, 0), tile.TargetPosition, tile));
+        }
+        if (!checkedTiles.Where(x => x.Position == new Vector3Int(tile.Position.x - 1, tile.Position.y + 1, 0)).Any())
+        {
+            neighbours.Add(CreateNode(tile.G + 2, new Vector3Int(tile.Position.x - 1, tile.Position.y + 1, 0), tile.TargetPosition, tile));
+        }
+        if (!checkedTiles.Where(x => x.Position == new Vector3Int(tile.Position.x + 1, tile.Position.y - 1, 0)).Any())
+        {
+            neighbours.Add(CreateNode(tile.G + 2, new Vector3Int(tile.Position.x + 1, tile.Position.y - 1, 0), tile.TargetPosition, tile));
+        }
+        if (!checkedTiles.Where(x => x.Position == new Vector3Int(tile.Position.x - 1, tile.Position.y - 1, 0)).Any())
+        {
+            neighbours.Add(CreateNode(tile.G + 2, new Vector3Int(tile.Position.x - 1, tile.Position.y - 1, 0), tile.TargetPosition, tile));
         }
         return neighbours;
     }

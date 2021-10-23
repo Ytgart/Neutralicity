@@ -24,6 +24,7 @@ public class TileDataRepository : MonoBehaviour
 
     public void UpdateMap()
     {
+        tileData.Clear();
         foreach (var item in _tilemap.cellBounds.allPositionsWithin)
         {
             if (_tilemap.HasTile(item))

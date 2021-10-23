@@ -7,6 +7,7 @@ public class InputHandler : MonoBehaviour
     [SerializeField] private TileDataRepository _repository;
     [SerializeField] private TilePanel _tilePanel;
     [SerializeField] private Tilemap _tilemap;
+    [SerializeField] private Pathfinder _pathfinder;
     public MainInput MainInput { get; private set; }
 
     private void Awake()
@@ -35,5 +36,7 @@ public class InputHandler : MonoBehaviour
         var mousePosition = Camera.main.ScreenToWorldPoint((Vector3)MainInput.Main.MousePosition.ReadValue<Vector2>());
         var tilePosition = _tilemap.WorldToCell(mousePosition);
         _tilePanel.ShowTileInfo(_repository.GetTileData(tilePosition));
+        _pathfinder.FindPath(tilePosition);
+
     }
 }
