@@ -1,114 +1,73 @@
-using System.Collections;
 using System.Linq;
 using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.Tilemaps;
-using System;
+using System.Numerics;
 
-public class Pathfinder : MonoBehaviour
+public class Pathfinder
 {
-    [SerializeField] private Tilemap _tilemap;
-    [SerializeField] private Tilemap _renderTilemap;
-    [SerializeField] private Tile _tile;
-    [SerializeField] private BaseUnit _baseUnit;
-    [SerializeField] private TileDataRepository _repository;
-
-    public List<Vector3Int> FindPath(Vector3Int targetTile)
+    public List<Vector2> FindPath(Vector2 startPosition, Vector2 targetPosition, Dictionary<Vector2, float> weightMatrix, out List<Vector2> path)
     {
-        var pathToTarget = new List<Vector3Int>();
-        var checkedTiles = new List<PathData>();
-        var waitingTiles = new List<PathData>();
+        var checkedTiles = new List<Node>();
+        var waitingTiles = new List<Node>();
+        var startNode = new Node(0, weightMatrix[startPosition], startPosition, targetPosition, null);
 
-        var tilePosition = _tilemap.WorldToCell(_baseUnit.transform.position);
+        checkedTiles.Add(startNode);
 
-        var firstTile = CreateNode(0, tilePosition, targetTile, null);
-        checkedTiles.Add(_repository.GetTileData(tilePosition));
-
-        _renderTilemap.ClearAllTiles();
-        _repository.UpdateMap();
-
-        waitingTiles.AddRange(FindNeighbourTiles(firstTile, checkedTiles));
+        waitingTiles.AddRange(FindNeighbourTiles(startNode, weightMatrix));
 
         while (waitingTiles.Count > 0)
         {
-            PathData pathDataToCheck = waitingTiles.Where(x => x.F == waitingTiles.Min(y => y.F)).Last();
+            Node nodeToCheck = waitingTiles.Where(x => x.F == waitingTiles.Min(y => y.F)).Last();
 
-            if (pathDataToCheck.Position == targetTile)
+            if (nodeToCheck.Position == targetPosition)
             {
-                return CalculatePathFromTiles(pathDataToCheck);
+                return path = CalculatePathFromTiles(nodeToCheck);
             }
 
-            waitingTiles.Remove(pathDataToCheck);
-            if (!checkedTiles.Where(x => x.Position == pathDataToCheck.Position).Any())
+            waitingTiles.Remove(nodeToCheck);
+            if (!checkedTiles.Where(x => x.Position == nodeToCheck.Position).Any())
             {
-                checkedTiles.Add(pathDataToCheck);
-                waitingTiles.AddRange(FindNeighbourTiles(pathDataToCheck, checkedTiles));
+                checkedTiles.Add(nodeToCheck);
+                waitingTiles.AddRange(FindNeighbourTiles(nodeToCheck, weightMatrix));
             }
         }
-        return pathToTarget;
+        return path = null;
     }
 
-    private List<Vector3Int> CalculatePathFromTiles(PathData data)
+    private List<Vector2> CalculatePathFromTiles(Node data)
     {
-        var resultPath = new List<Vector3Int>();
-        var currentTile = data;
+        var resultPath = new List<Vector2>();
+        var currentNode = data;
 
-        while (currentTile.PreviousTile != null)
+        while (currentNode.PreviousNode != null)
         {
-            resultPath.Add(currentTile.Position);
-            _renderTilemap.SetTile(currentTile.Position, _tile);
-            currentTile = currentTile.PreviousTile;
+            resultPath.Add(currentNode.Position);
+            currentNode = currentNode.PreviousNode;
         }
         return resultPath;
     }
 
-    PathData CreateNode(int g, Vector3Int position, Vector3Int targetTile, PathData previous)
+    private List<Node> FindNeighbourTiles(Node node, Dictionary<Vector2, float> weightMatrix)
     {
-        var data = _repository.GetTileData(position);
-        data.Position = position;
-        data.TargetPosition = targetTile;
-        data.PreviousTile = previous;
-        data.G = g;
-        data.H = (int)Mathf.Abs(targetTile.x - position.x) + (int)Mathf.Abs(targetTile.y - position.y);
-        data.F = data.G + data.H + (int)data.Type;
-        return data;
-    }
+        var neighbours = new List<Node>();
 
-    List<PathData> FindNeighbourTiles(PathData tile, List<PathData> checkedTiles)
-    {
-        var neighbours = new List<PathData>();
+        var coords = new List<Vector2>();
 
-        if (!checkedTiles.Where(x => x.Position == new Vector3Int(tile.Position.x + 1, tile.Position.y, 0)).Any())
+        coords.Add(new Vector2(node.Position.X + 1, node.Position.Y));
+        coords.Add(new Vector2(node.Position.X - 1, node.Position.Y));
+        coords.Add(new Vector2(node.Position.X, node.Position.Y + 1));
+        coords.Add(new Vector2(node.Position.X, node.Position.Y - 1));
+        coords.Add(new Vector2(node.Position.X + 1, node.Position.Y + 1));
+        coords.Add(new Vector2(node.Position.X - 1, node.Position.Y + 1));
+        coords.Add(new Vector2(node.Position.X + 1, node.Position.Y - 1));
+        coords.Add(new Vector2(node.Position.X - 1, node.Position.Y - 1));
+
+        for (int i = 0; i < coords.Count; i++)
         {
-            neighbours.Add(CreateNode(tile.G + 1, new Vector3Int(tile.Position.x + 1, tile.Position.y, 0), tile.TargetPosition, tile));
-        }
-        if (!checkedTiles.Where(x => x.Position == new Vector3Int(tile.Position.x - 1, tile.Position.y, 0)).Any())
-        {
-            neighbours.Add(CreateNode(tile.G + 1, new Vector3Int(tile.Position.x - 1, tile.Position.y, 0), tile.TargetPosition, tile));
-        }
-        if (!checkedTiles.Where(x => x.Position == new Vector3Int(tile.Position.x, tile.Position.y + 1, 0)).Any())
-        {
-            neighbours.Add(CreateNode(tile.G + 1, new Vector3Int(tile.Position.x, tile.Position.y + 1, 0), tile.TargetPosition, tile));
-        }
-        if (!checkedTiles.Where(x => x.Position == new Vector3Int(tile.Position.x, tile.Position.y - 1, 0)).Any())
-        {
-            neighbours.Add(CreateNode(tile.G + 1, new Vector3Int(tile.Position.x, tile.Position.y - 1, 0), tile.TargetPosition, tile));
-        }
-        if (!checkedTiles.Where(x => x.Position == new Vector3Int(tile.Position.x + 1, tile.Position.y + 1, 0)).Any())
-        {
-            neighbours.Add(CreateNode(tile.G + 2, new Vector3Int(tile.Position.x + 1, tile.Position.y + 1, 0), tile.TargetPosition, tile));
-        }
-        if (!checkedTiles.Where(x => x.Position == new Vector3Int(tile.Position.x - 1, tile.Position.y + 1, 0)).Any())
-        {
-            neighbours.Add(CreateNode(tile.G + 2, new Vector3Int(tile.Position.x - 1, tile.Position.y + 1, 0), tile.TargetPosition, tile));
-        }
-        if (!checkedTiles.Where(x => x.Position == new Vector3Int(tile.Position.x + 1, tile.Position.y - 1, 0)).Any())
-        {
-            neighbours.Add(CreateNode(tile.G + 2, new Vector3Int(tile.Position.x + 1, tile.Position.y - 1, 0), tile.TargetPosition, tile));
-        }
-        if (!checkedTiles.Where(x => x.Position == new Vector3Int(tile.Position.x - 1, tile.Position.y - 1, 0)).Any())
-        {
-            neighbours.Add(CreateNode(tile.G + 2, new Vector3Int(tile.Position.x - 1, tile.Position.y - 1, 0), tile.TargetPosition, tile));
+            if (i > 3)
+            {
+                neighbours.Add(new Node(node.G + 1.4f, weightMatrix[coords[i]], coords[i], node.TargetPosition, node));
+            }
+            neighbours.Add(new Node(node.G + 1f, weightMatrix[coords[i]], coords[i], node.TargetPosition, node));
         }
         return neighbours;
     }
