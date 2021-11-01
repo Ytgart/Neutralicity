@@ -27,16 +27,13 @@ public class Map : MonoBehaviour
             {
                 switch (_tilemap.GetTile(item).name)
                 {
-                    case "Grass":
+                    case "grass":
                         result.Add(new System.Numerics.Vector2(item.x, item.y), 20);
                         break;
-                    case "Road":
+                    case "road":
                         result.Add(new System.Numerics.Vector2(item.x, item.y), 0);
                         break;
-                    case "Mud":
-                        result.Add(new System.Numerics.Vector2(item.x, item.y), 15);
-                        break;
-                    case "Pathless":
+                    case "pathless":
                         result.Add(new System.Numerics.Vector2(item.x, item.y), 999);
                         break;
                 }
