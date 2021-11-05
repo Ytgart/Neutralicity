@@ -6,6 +6,4 @@ public class CityHouse : MonoBehaviour
 {
     public int house = 0;
     public int wildmill = 1;
-    
-
 }
