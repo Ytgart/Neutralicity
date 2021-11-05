@@ -33147,7 +33147,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3aa090d7129e3c542a35b700e7ba44c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _tickRate: 0.15
+  _tickRate: 3
   _gameRender: {fileID: 1444100981}
 --- !u!1 &1188116094
 GameObject:

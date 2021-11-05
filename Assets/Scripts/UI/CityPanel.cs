@@ -10,11 +10,6 @@ public class CityPanel : MonoBehaviour
 
     private City _targetCity;
 
-    private void Start()
-    {
-        _game.OnInfoUpdated += ShowCityInfo;
-    }
-
     public void ShowCityInfo()
     {
         if (_targetCity != null)
