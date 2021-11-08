@@ -12,6 +12,7 @@ public class TimePanel : MonoBehaviour
 
     private void Awake()
     {
+        _speedText.text = $"Speed: 1 sec.";
         _ticker.OnTicked += UpdateDate;
         _pauseButton.onClick.AddListener(() =>
         {
@@ -19,11 +20,11 @@ public class TimePanel : MonoBehaviour
         });
         _fasterButton.onClick.AddListener(() =>
         {
-            _speedText.text = $"Speed: {_ticker.ChangeSpeed(-0.1f)} сек.";
+            _speedText.text = $"Speed: {_ticker.ChangeSpeed(-0.1f)} sec.";
         });
         _slowerButton.onClick.AddListener(() =>
         {
-            _speedText.text = $"Speed: {_ticker.ChangeSpeed(0.1f)} сек.";
+            _speedText.text = $"Speed: {_ticker.ChangeSpeed(0.1f)} sec.";
         });
     }
 

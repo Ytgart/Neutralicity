@@ -46,6 +46,6 @@ public class Ticker : MonoBehaviour
     {
         _tickRate += speedDelta;
         _tickRate = Mathf.Clamp(_tickRate, 0.1f, 1);
-        return _tickRate;
+        return Mathf.Round(_tickRate * 10.0f) * 0.1f;
     }
 }

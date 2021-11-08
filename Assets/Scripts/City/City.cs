@@ -13,7 +13,6 @@ public class City : IDamageable
 
     public List<Vector3> housePositions = new List<Vector3>();
      
-
     public City(string name, Vector2 location)
     {
         _name = name;

@@ -9,14 +9,12 @@ public class GameRender : MonoBehaviour
     [SerializeField] private GameObject _cityModel;
     [SerializeField] private GameObject _cityHouse;
 
-    
     public void RenderCities(List<City> _cities) 
     {
         foreach (City item in _cities)
         {
-            Instantiate(_cityModel, new Vector3(item.Location.X, item.Location.Y, 0), Quaternion.identity);
+            var newObject = Instantiate(_cityModel, new Vector3(item.Location.X, item.Location.Y, 0), Quaternion.identity);
         }
-        
     }
     
     public void RenderCitiesGrowth(List<City> _cities)
