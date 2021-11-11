@@ -1,33 +1,26 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using Zenject;
 
 public class Game : MonoBehaviour
 {
-    [SerializeField] private float _tickRate;
     [SerializeField] private GameRender _gameRender;
-    private CityCatalogue _cities = new CityCatalogue();
+    [SerializeField] private Ticker _ticker;
+    [SerializeField] private Text _text;
 
-    public Action OnInfoUpdated;
+    [Inject] public ICityList _cities { get; set; }
 
-    
     private void Awake()
     {
-        
-        _cities.AddCity(new City("Забаш", new System.Numerics.Vector2(1,1)));
-        _cities.AddCity(new City("Шабаз", new System.Numerics.Vector2(20,1)));
-        _cities.AddCity(new City("Забашстан", new System.Numerics.Vector2(1,20)));
-
-        InvokeRepeating("TickGame",  1, _tickRate);
-
-        _gameRender.RenderCities(_cities._cities);
-
+        _ticker.OnTicked += TickGame;
+        _cities.AddCity(new City("Забаш", new System.Numerics.Vector2(1, 1)));
+        _cities.AddCity(new City("Шабаз", new System.Numerics.Vector2(20, 1)));
+        _cities.AddCity(new City("Забашстан", new System.Numerics.Vector2(1, 20)));
     }
 
     public void TickGame()
     {
         _cities.UpdateList();
-        _gameRender.RenderCitiesGrowth(_cities._cities);
+        //_gameRender.RenderCitiesGrowth(_cities._cities);
     }
 }

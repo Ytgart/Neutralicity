@@ -10,5 +10,4 @@ public interface ICityList
     void DeleteCity(string name);
 
     void UpdateList();
-
 }
