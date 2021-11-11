@@ -7,7 +7,6 @@ public enum InteractableType
 
 public interface IInteractable
 {
-    string Name { get; set; }
-    int ID { get; set; }
+    int Index { get; set; }
     InteractableType Type { get; set; }
 }

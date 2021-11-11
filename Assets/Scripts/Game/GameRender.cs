@@ -1,19 +1,24 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using Zenject;
 
 public class GameRender : MonoBehaviour
 {
-    [SerializeField] private Game _game;
+    [Inject] private Game _game;
     [SerializeField] private GameObject _cityModel;
     [SerializeField] private GameObject _cityHouse;
+    [Inject] private DiContainer _diContainer;
 
     public void RenderCities(List<City> _cities) 
     {
+        var i = 0;
         foreach (City item in _cities)
         {
-            var newObject = Instantiate(_cityModel, new Vector3(item.Location.X, item.Location.Y, 0), Quaternion.identity);
+            var newObject = _diContainer.InstantiatePrefab(_cityModel, new Vector3(item.Location.X, item.Location.Y, 0), Quaternion.identity, null);
+            newObject.GetComponent<InteractableObject>().Type = InteractableType.city;
+            newObject.GetComponent<InteractableObject>().Index = i;
+            i++;
         }
     }
     
