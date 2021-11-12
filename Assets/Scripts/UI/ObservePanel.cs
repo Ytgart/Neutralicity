@@ -2,13 +2,40 @@ using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
 
-public class ObservePanel : MonoBehaviour
+public class ObservePanel : Panel
 {
     [Inject] private Game _game;
-    [SerializeField] private Text _text;
+    [Inject] private Ticker _ticker;
 
-    public void ShowInfo(IInteractable clickedObject) 
+    private InteractableObject _currentObject;
+
+    private void Awake()
     {
-        _text.text = _game._cities._cities[clickedObject.Index].Name;
+        _ticker.OnTicked += ShowInfo;
+    }
+
+    public void SetObject(InteractableObject newObject)
+    {
+        _currentObject = newObject;
+        ShowInfo();
+    }
+
+    private void ShowInfo()
+    {
+        if (_currentObject != null)
+        {
+            switch (_currentObject.Type)
+            {
+                case InteractableType.city:
+                    _texts[0].text = _game.Cities._cities[_currentObject.Index].GetData();
+                    break;
+                case InteractableType.unit:
+                    break;
+                case InteractableType.structure:
+                    break;
+                default:
+                    break;
+            }
+        }
     }
 }

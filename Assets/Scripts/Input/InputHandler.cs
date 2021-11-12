@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Tilemaps;
+using Zenject;
 
 public class InputHandler : MonoBehaviour
 {

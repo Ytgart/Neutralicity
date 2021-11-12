@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 7d0de757acf31ac4b8554585894a22af
+guid: 2dc91f04bfa25b44ea6b2cfd46fa8dea
 TrueTypeFontImporter:
   externalObjects: {}
   serializedVersion: 4
@@ -9,7 +9,7 @@ TrueTypeFontImporter:
   characterPadding: 1
   includeFontData: 1
   fontNames:
-  - Comic Sans MS
+  - Sunflower Highway Sign Caps
   fallbackFontReferences: []
   customCharacters: 
   fontRenderingMode: 0

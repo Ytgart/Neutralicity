@@ -57,6 +57,14 @@ public class @MainInput : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""F1 Button"",
+                    ""type"": ""Button"",
+                    ""id"": ""f9d0a78f-0c59-472d-9761-6bf277d89518"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -114,6 +122,17 @@ public class @MainInput : IInputActionCollection, IDisposable
                     ""action"": ""MouseClickRight"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f51ddea7-64a4-4e1f-a463-6702775d325c"",
+                    ""path"": ""<Keyboard>/f1"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""F1 Button"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -127,6 +146,7 @@ public class @MainInput : IInputActionCollection, IDisposable
         m_Main_MouseClickRight = m_Main.FindAction("MouseClickRight", throwIfNotFound: true);
         m_Main_MousePosition = m_Main.FindAction("Mouse Position", throwIfNotFound: true);
         m_Main_MouseDelta = m_Main.FindAction("Mouse Delta", throwIfNotFound: true);
+        m_Main_F1Button = m_Main.FindAction("F1 Button", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -181,6 +201,7 @@ public class @MainInput : IInputActionCollection, IDisposable
     private readonly InputAction m_Main_MouseClickRight;
     private readonly InputAction m_Main_MousePosition;
     private readonly InputAction m_Main_MouseDelta;
+    private readonly InputAction m_Main_F1Button;
     public struct MainActions
     {
         private @MainInput m_Wrapper;
@@ -190,6 +211,7 @@ public class @MainInput : IInputActionCollection, IDisposable
         public InputAction @MouseClickRight => m_Wrapper.m_Main_MouseClickRight;
         public InputAction @MousePosition => m_Wrapper.m_Main_MousePosition;
         public InputAction @MouseDelta => m_Wrapper.m_Main_MouseDelta;
+        public InputAction @F1Button => m_Wrapper.m_Main_F1Button;
         public InputActionMap Get() { return m_Wrapper.m_Main; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -214,6 +236,9 @@ public class @MainInput : IInputActionCollection, IDisposable
                 @MouseDelta.started -= m_Wrapper.m_MainActionsCallbackInterface.OnMouseDelta;
                 @MouseDelta.performed -= m_Wrapper.m_MainActionsCallbackInterface.OnMouseDelta;
                 @MouseDelta.canceled -= m_Wrapper.m_MainActionsCallbackInterface.OnMouseDelta;
+                @F1Button.started -= m_Wrapper.m_MainActionsCallbackInterface.OnF1Button;
+                @F1Button.performed -= m_Wrapper.m_MainActionsCallbackInterface.OnF1Button;
+                @F1Button.canceled -= m_Wrapper.m_MainActionsCallbackInterface.OnF1Button;
             }
             m_Wrapper.m_MainActionsCallbackInterface = instance;
             if (instance != null)
@@ -233,6 +258,9 @@ public class @MainInput : IInputActionCollection, IDisposable
                 @MouseDelta.started += instance.OnMouseDelta;
                 @MouseDelta.performed += instance.OnMouseDelta;
                 @MouseDelta.canceled += instance.OnMouseDelta;
+                @F1Button.started += instance.OnF1Button;
+                @F1Button.performed += instance.OnF1Button;
+                @F1Button.canceled += instance.OnF1Button;
             }
         }
     }
@@ -244,5 +272,6 @@ public class @MainInput : IInputActionCollection, IDisposable
         void OnMouseClickRight(InputAction.CallbackContext context);
         void OnMousePosition(InputAction.CallbackContext context);
         void OnMouseDelta(InputAction.CallbackContext context);
+        void OnF1Button(InputAction.CallbackContext context);
     }
 }

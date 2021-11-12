@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 2cd57b04633123643bf9ab527feafdb7
+guid: c51f0186e45f56f4aa14cb494ebe9ecf
 TrueTypeFontImporter:
   externalObjects: {}
   serializedVersion: 4
@@ -9,7 +9,7 @@ TrueTypeFontImporter:
   characterPadding: 1
   includeFontData: 1
   fontNames:
-  - Alexside
+  - Fifaks 1.0 dev1
   fallbackFontReferences: []
   customCharacters: 
   fontRenderingMode: 0

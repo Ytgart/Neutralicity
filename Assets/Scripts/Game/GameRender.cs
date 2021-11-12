@@ -15,7 +15,10 @@ public class GameRender : MonoBehaviour
         var i = 0;
         foreach (City item in _cities)
         {
-            var newObject = _diContainer.InstantiatePrefab(_cityModel, new Vector3(item.Location.X, item.Location.Y, 0), Quaternion.identity, null);
+            var newObject = _diContainer.InstantiatePrefab(
+                _cityModel, 
+                new Vector3(item.Location.X, item.Location.Y, 0), 
+                Quaternion.identity, null);
             newObject.GetComponent<InteractableObject>().Type = InteractableType.city;
             newObject.GetComponent<InteractableObject>().Index = i;
             i++;

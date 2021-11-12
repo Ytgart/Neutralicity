@@ -3,10 +3,10 @@ using Zenject;
 
 public class UIInstaller : MonoInstaller
 {
-    [SerializeField] private ObservePanel _panel;
+    [SerializeField] private UIController _controller;
 
     public override void InstallBindings()
     {
-        Container.Bind<ObservePanel>().FromInstance(_panel).AsSingle();
+        Container.Bind<UIController>().FromInstance(_controller).AsSingle();
     }
 }

@@ -1,17 +1,17 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
+using Zenject;
 
 public class CameraBehavior : MonoBehaviour
 {
     [SerializeField] private Camera _camera;
-    [SerializeField] private InputHandler _inputHandler;
-
-    private Vector3 _targerPosition;
+    [Inject] private InputHandler _inputHandler;
 
     void Update()
+    {
+        MoveCamera();
+    }
+
+    public void MoveCamera() 
     {
         _camera.orthographicSize -= _inputHandler.GetWheelVector().y / 2;
         _camera.orthographicSize = Mathf.Clamp(_camera.orthographicSize, 5, 20);

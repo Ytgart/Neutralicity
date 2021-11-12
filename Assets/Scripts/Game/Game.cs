@@ -5,22 +5,23 @@ using Zenject;
 public class Game : MonoBehaviour
 {
     [SerializeField] private GameRender _gameRender;
-    [SerializeField] private Ticker _ticker;
-    [SerializeField] private Text _text;
+    [Inject] private Ticker _ticker;
 
-    [Inject] public ICityList _cities { get; set; }
+    public ICityList Cities { get; set; } = new CityCatalogue();
 
     private void Awake()
     {
         _ticker.OnTicked += TickGame;
-        _cities.AddCity(new City("Забаш", new System.Numerics.Vector2(1, 1)));
-        _cities.AddCity(new City("Шабаз", new System.Numerics.Vector2(20, 1)));
-        _cities.AddCity(new City("Забашстан", new System.Numerics.Vector2(1, 20)));
+        Cities.AddCity(new City("Забаш", new System.Numerics.Vector2(1, 1)));
+        Cities.AddCity(new City("Шабаз", new System.Numerics.Vector2(20, 1)));
+        Cities.AddCity(new City("Забашстан", new System.Numerics.Vector2(1, 20)));
+
+        _gameRender.RenderCities(Cities._cities);
     }
 
     public void TickGame()
     {
-        _cities.UpdateList();
+        Cities.UpdateList();
         //_gameRender.RenderCitiesGrowth(_cities._cities);
     }
 }

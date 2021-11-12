@@ -2,35 +2,30 @@ using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
 
-public class TimePanel : MonoBehaviour
+public class TimePanel : Panel
 {
-    [SerializeField] private Ticker _ticker;
-    [SerializeField] private Button _pauseButton;
-    [SerializeField] private Button _fasterButton;
-    [SerializeField] private Button _slowerButton;
-    [SerializeField] private Text _dateText;
-    [SerializeField] private Text _speedText;
+    [Inject] private Ticker _ticker;
 
     private void Awake()
     {
-        _speedText.text = $"Speed: 1 sec.";
+        _texts[0].text = $"Speed: 1 sec.";
         _ticker.OnTicked += UpdateDate;
-        _pauseButton.onClick.AddListener(() =>
+        _buttons[0].onClick.AddListener(() =>
         {
             _ticker.TogglePausedState();
         });
-        _fasterButton.onClick.AddListener(() =>
+        _buttons[1].onClick.AddListener(() =>
         {
-            _speedText.text = $"Speed: {_ticker.ChangeSpeed(-0.1f)} sec.";
+            _texts[0].text = $"Speed: {_ticker.ChangeSpeed(-0.1f)} sec.";
         });
-        _slowerButton.onClick.AddListener(() =>
+        _buttons[2].onClick.AddListener(() =>
         {
-            _speedText.text = $"Speed: {_ticker.ChangeSpeed(0.1f)} sec.";
+            _texts[0].text = $"Speed: {_ticker.ChangeSpeed(0.1f)} sec.";
         });
     }
 
     private void UpdateDate()
     {
-        _dateText.text = _ticker.GetCurrentDate();
+        _texts[1].text = _ticker.GetCurrentDate();
     }
 }

@@ -1,12 +1,5 @@
-public enum InteractableType
+﻿interface IInteractable
 {
-    city,
-    unit,
-    structure
+    string GetData();
 }
 
-public interface IInteractable
-{
-    int Index { get; set; }
-    InteractableType Type { get; set; }
-}
