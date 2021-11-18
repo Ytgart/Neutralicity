@@ -14,7 +14,7 @@ public class CameraBehavior : MonoBehaviour
     public void MoveCamera() 
     {
         _camera.orthographicSize -= _inputHandler.GetWheelVector().y / 2;
-        _camera.orthographicSize = Mathf.Clamp(_camera.orthographicSize, 5, 20);
+        _camera.orthographicSize = Mathf.Clamp(_camera.orthographicSize, 2, 20);
 
         if (_inputHandler.MainInput.Main.MouseClickLeft.ReadValue<float>() >= 1)
         {

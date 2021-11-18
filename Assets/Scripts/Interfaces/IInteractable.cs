@@ -1,5 +1,5 @@
-﻿interface IInteractable
+public interface IInteractable
 {
-    string GetData();
+    void Interact();
+    string GetDataString();
 }
-

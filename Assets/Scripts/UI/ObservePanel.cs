@@ -4,38 +4,27 @@ using Zenject;
 
 public class ObservePanel : Panel
 {
-    [Inject] private Game _game;
     [Inject] private Ticker _ticker;
 
-    private InteractableObject _currentObject;
+    private IInteractable _currentObject;
 
     private void Awake()
     {
-        _ticker.OnTicked += ShowInfo;
+        _ticker.OnTicked += UpdateInfo;
     }
 
-    public void SetObject(InteractableObject newObject)
+    public void SetCurrentObject(IInteractable entity) 
     {
-        _currentObject = newObject;
-        ShowInfo();
+        _currentObject = entity;
+        UpdateInfo();
     }
 
-    private void ShowInfo()
+    public void UpdateInfo() 
     {
-        if (_currentObject != null)
+        if (_currentObject != null) 
         {
-            switch (_currentObject.Type)
-            {
-                case InteractableType.city:
-                    _texts[0].text = _game.Cities._cities[_currentObject.Index].GetData();
-                    break;
-                case InteractableType.unit:
-                    break;
-                case InteractableType.structure:
-                    break;
-                default:
-                    break;
-            }
+            _texts[0].text = _currentObject.GetDataString();
         }
     }
 }
+
