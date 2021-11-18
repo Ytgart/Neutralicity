@@ -12,7 +12,7 @@ public class InputHandler : MonoBehaviour
     private void Awake()
     {
         MainInput = new MainInput();
-        MainInput.Main.MouseClickLeft.performed += ShowCoordinates;
+        //MainInput.Main.MouseClickLeft.performed += ShowCoordinates;
     }
 
     private void OnEnable()

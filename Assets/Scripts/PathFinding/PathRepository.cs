@@ -53,7 +53,6 @@ public class PathRepository : MonoBehaviour
 
     public void AddPath(List<System.Numerics.Vector2> path)
     {
-        path.Reverse();
         _paths.Add(_pathID, path);
         Debug.Log($"Путь найден {_pathID}");
         _pathID++;

@@ -10,6 +10,7 @@ public class GameInstaller : MonoInstaller
     [SerializeField] private Tilemap _tilemap;
     [SerializeField] private Map _map;
     [SerializeField] private PathRepository _pathRepository;
+    [SerializeField] private CameraBehavior _cameraBehaviour;
 
     public override void InstallBindings()
     {
@@ -19,6 +20,7 @@ public class GameInstaller : MonoInstaller
         Container.Bind<Tilemap>().FromInstance(_tilemap).AsSingle();
         Container.Bind<Map>().FromInstance(_map).AsSingle();
         Container.Bind<PathRepository>().FromInstance(_pathRepository).AsSingle();
+        Container.Bind<CameraBehavior>().FromInstance(_cameraBehaviour).AsSingle();
         Container.Bind<IResourcesList<Resource>>().To<ResourcesList>().FromNew().AsTransient();
     }
 }
