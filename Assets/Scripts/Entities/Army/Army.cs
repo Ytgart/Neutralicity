@@ -35,6 +35,6 @@ public class Army : GameEntity
 
     public void SetNewPath(List<System.Numerics.Vector2> newPath)
     {
-        _path = newPath.ConvertAll(x => new System.Numerics.Vector2(x.X, x.Y));
+        _path = newPath;
     }
 }
